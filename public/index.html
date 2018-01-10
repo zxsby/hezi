@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="d1"></div>
+<div id="d2">
+    <select name="">
+        <option value="1">1</option>
+        <option value="0">0</option>
+    </select>
+    <select name="">
+        <option value="1">1</option>
+        <option value="0">0</option>
+    </select>
+    <select name="">
+        <option value="1">1</option>
+        <option value="0">0</option>
+    </select>
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="number">
+    <input type="number">
+    <input type="number">
+    <button id="sub">提交</button>
+</div>
+</body>
+<script src="js/jquery-1.11.3.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let socket = io();
+    socket.emit("send","");
+    socket.on("getmsg",(msg)=>{
+        console.log(msg)
+        var html=`
+        <div>${msg[0].a}</div>
+        <div>${msg[0].b}</div>
+        <div>${msg[0].c}</div>
+        <div>${msg[0].d}</div>
+        <div>${msg[0].e}</div>
+        <div>${msg[0].f}</div>
+        <div>${msg[0].g}</div>
+        <div>${msg[0].h}</div>
+        <div>${msg[0].i}</div>
+        <div>${msg[0].gg}</div>
+        <div>${msg[0].hh}</div>
+        <div>${msg[0].ii}</div>
+        <div>${msg[0].cc}</div>
+        `
+        document.getElementById('d1').innerHTML=html
+    });
+   var put=$('#d2').children('input')
+    var selt=$('#d2').children('select')
+
+    $('#sub').click(()=>{
+        var submit=[]
+        for(var i=0;i<selt.length;i++) {
+            submit.push(selt[i].value)
+        }
+        for(var i=0;i<put.length;i++) {
+            submit.push(put[i].value)
+        }
+        console.log(submit);
+        submit.push('TLSJZDHZ201801031441')
+        submit=submit.toString()
+        console.log(submit);
+        $.ajax({
+            type:"post",
+            url:"http://139.129.30.68:8756/getmsg",
+            data:{submit},
+            success:function(data){
+                console.log(data);
+            },
+            error:function(){
+            }
+        })
+    })
+</script>
+</html>
